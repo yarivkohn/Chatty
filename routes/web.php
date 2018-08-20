@@ -101,3 +101,9 @@ Route::post('/status', [
     'as' => 'status.post',
     'middleware' => ['auth'],
 ]);
+
+Route::post('/status/{statusId}/replay', [
+	'uses' => '\Chatty\Http\Controllers\StatusesController@postReplay',
+	'as' => 'status.replay',
+	'middleware' => ['auth'],
+]);

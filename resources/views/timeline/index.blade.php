@@ -52,12 +52,16 @@
                                 {{--</ul>--}}
                             {{--</div>--}}
                         {{--</div>--}}
-                        <form role="form" action="" method="post">
-                            <div class="form-group">
-                                <textarea  name="reply-1" class="form-control"rows="2" placeholder="replay...">
+                        <form role="form" action="{{ route('status.replay', ['statusId' => $status->id]) }}" method="post">
+                            <div class="form-group {{ $errors->has("replay-{$status->id}")? ' has-error' : '' }}">
+                                <textarea  name="replay-{{ $status->id }}" class="form-control" rows="2" placeholder="replay...">
                                 </textarea>
+                                @if($errors->has("replay-{$status->id}"))
+                                    <span class="help-block">{{ $errors->first("replay-{$status->id}") }}</span>
+                                @endif
                             </div>
                             <input type="submit" value="replay" class="btn btn-default btn-small">
+                            <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </form>
                     </div>
 
