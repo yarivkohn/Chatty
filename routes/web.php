@@ -107,3 +107,10 @@ Route::post('/status/{statusId}/replay', [
 	'as' => 'status.replay',
 	'middleware' => ['auth'],
 ]);
+
+
+Route::get('/status/{statusId}/like', [
+	'uses' => '\Chatty\Http\Controllers\StatusesController@getLike',
+	'as' => 'status.like',
+	'middleware' => ['auth'],
+]);

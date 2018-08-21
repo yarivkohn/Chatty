@@ -33,8 +33,10 @@
                             <p> {{ $status->body }} </p>
                             <ul class="list-inline">
                                 <li>{{  $status->created_at->diffForHumans() }}</li>
-                                <li><a href="#">Like</a></li>
-                                <li>10 Likes</li>
+                                @if($status->user->id !== Auth::user()->id)
+                                    <li><a href="{{ route('status.like', ['statusId' => $status->id]) }}">Like</a></li>
+                                    <li>10 Likes</li>
+                                @endif
                             </ul>
                         </div>
                         @foreach ($status->replies as $reply)
@@ -46,8 +48,10 @@
                                     <p>{{ $reply->body }}</p>
                                     <ul class="list-inline">
                                         <li>{{ $reply->created_at->diffForHumans() }}</li>
-                                        <li><a href="#">Like</a></li>
-                                        <li>4 Likes</li>
+                                        @if($reply->user->id !== Auth::user()->id)
+                                            <li><a href="{{ route('status.like', ['statusId' => $reply->id]) }}">Like</a></li>
+                                            <li>4 Likes</li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -60,8 +64,7 @@
                                     <span class="help-block">{{ $errors->first("replay-{$status->id}") }}</span>
                                 @endif
                             </div>
-                            <input type="submit" value="Replay" class="btn btn-default btn-small">
-                            <input type="hidden" name="_token" value="{{ Session::token() }}">
+                            <input type="submit" value="Replay" class="btn btn-default btn-small"> <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </form>
                     </div>
 
