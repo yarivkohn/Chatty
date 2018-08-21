@@ -6,7 +6,7 @@
             <form role="form" action="{{ route('status.post') }}" method="post">
                 <div class="form-group {{ $errors->has('status')? ' has-error' : '' }}">
                     <textarea placeholder="What's on your mind?"
-                              name="status" class="form-control" rows="2"></textarea>
+                            name="status" class="form-control" rows="2"></textarea>
                     @if($errors->has('status'))
                         <span class="help-block">{{ $errors->first('status') }}</span>
                     @endif
@@ -25,9 +25,8 @@
             @else
                 @foreach($statuses as $status)
                     <div class="media">
-                        <a class="pull-left" href="{{ route('profile.index', ['username' => $status->user->username]) }}">
-                            <img class="media-object" alt="{{ $status->user->getNameOrUsername() }}" src="{{ $status->user->getAvatarUrl() }}">
-                        </a>
+                        <a class="pull-left" href="{{ route('profile.index', ['username' => $status->user->username]) }}"> <img class="media-object" alt="{{ $status->user->getNameOrUsername() }}"
+                                    src="{{ $status->user->getAvatarUrl() }}"> </a>
                         <div class="media-body">
                             <h4 class="media-heading"><a href='{{ route('profile.index', ['username' => $status->user->username]) }}'>
                                     {{ $status->user->getNameOrUsername() }}</a></h4>
@@ -38,29 +37,30 @@
                                 <li>10 Likes</li>
                             </ul>
                         </div>
-                        {{--<div class="media">--}}
-                            {{--<a class="pull-left" href="#">--}}
-                                {{--<img class="media-object" alt="" src="">--}}
-                            {{--</a>--}}
-                            {{--<div class="media-body">--}}
-                                {{--<h4 class="media-heading"><a>Yariv</a></h4>--}}
-                                {{--<p>Its lovely day today</p>--}}
-                                {{--<ul class="list-inline">--}}
-                                    {{--<li>8 minutes ago</li>--}}
-                                    {{--<li><a href="#">Like</a></li>--}}
-                                    {{--<li>4 Likes</li>--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                        @foreach ($status->replies as $reply)
+                            <div class="media">
+                                <a class="pull-left" href=" {{ route('profile.index', ['username' => $reply->user->username]) }}"> <img class="media-object"
+                                            alt="{{ $reply->user->getNameOrUsername() }}" src="{{ $reply->user->getAvatarUrl() }}"> </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="{{ route('profile.index', ['username' => $reply->user->username]) }}">{{ $reply->user->getNameOrUsername() }}</a></h4>
+                                    <p>{{ $reply->body }}</p>
+                                    <ul class="list-inline">
+                                        <li>{{ $reply->created_at->diffForHumans() }}</li>
+                                        <li><a href="#">Like</a></li>
+                                        <li>4 Likes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        @endforeach
+
                         <form role="form" action="{{ route('status.replay', ['statusId' => $status->id]) }}" method="post">
                             <div class="form-group {{ $errors->has("replay-{$status->id}")? ' has-error' : '' }}">
-                                <textarea  name="replay-{{ $status->id }}" class="form-control" rows="2" placeholder="replay...">
-                                </textarea>
+                                <textarea name="replay-{{ $status->id }}" class="form-control" rows="2" placeholder="replay..."></textarea>
                                 @if($errors->has("replay-{$status->id}"))
                                     <span class="help-block">{{ $errors->first("replay-{$status->id}") }}</span>
                                 @endif
                             </div>
-                            <input type="submit" value="replay" class="btn btn-default btn-small">
+                            <input type="submit" value="Replay" class="btn btn-default btn-small">
                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                         </form>
                     </div>
