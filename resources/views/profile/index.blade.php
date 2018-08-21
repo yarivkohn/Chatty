@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         @endforeach
-                        @if($authUserIsFriend || Auth::user()->id === $user->id)
+                        @if($authUserIsFriend || Auth::user()->id === $status->user->id)
                             <form role="form" action="{{ route('status.replay', ['statusId' => $status->id]) }}" method="post">
                                 <div class="form-group {{ $errors->has("replay-{$status->id}")? ' has-error' : '' }}">
                                     <textarea name="replay-{{ $status->id }}" class="form-control" rows="2" placeholder="replay..."></textarea>
