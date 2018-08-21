@@ -76,6 +76,7 @@ class StatusesController  extends Controller {
 		}
 		//Do not like the same post twice
 		if(Auth::user()->hasLikedStatus($status)) {
+			dd('has already liked');
 			return redirect()->route('home');
 		}
 		$like = $status->likes()->create([
